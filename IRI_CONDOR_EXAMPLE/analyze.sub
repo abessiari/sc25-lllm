@@ -1,0 +1,31 @@
+# LLM job.
+
+executable              = analyze.sh
+arguments               = /storage/sc25-demo/synthetic_training_data_1g.txt /storage/sc25-demo-results
+
+log                     = logs/sleep_$(Cluster)_$(Process).log
+output                  = logs/sleep_$(Cluster)_$(Process).out
+error                   = logs/sleep_$(Cluster)_$(Process).err
+
+should_transfer_files   = Yes
+when_to_transfer_output = ON_EXIT
+
+request_cpus            = 1
+# request_memory          = 512M
+request_memory          = 1024M
+request_disk            = 1G
+
+# Run on this site.
++IRISitename = "FABRIC"
+
+# Get input from here. 
++IRI_InputDataLocation = "NRP"
++IRI_InputDataPath = "/storage/sc25-demo"
+
+# Place output here.
++IRI_OutputDataLocation = "NRP"
++IRI_OutputDataPath = "/storage/sc25-demo-results"
+
+Requirements = (TARGET.Arch == "X86_64")
++SingularityImage = "docker://aessiari/iri-llm:v2"
+queue 1
