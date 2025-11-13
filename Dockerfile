@@ -8,4 +8,4 @@ RUN apt-get update -y \
 RUN pip3 install --no-cache-dir -qq transformers torch accelerate datasets
 
 WORKDIR /root
-COPY . .
+COPY ./tiny_gpt2_cpu_1k.py ./tiny_gpt2_cpu_1k.py
