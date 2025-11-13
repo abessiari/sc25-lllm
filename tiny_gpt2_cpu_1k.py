@@ -113,18 +113,19 @@ def main():
         print("Usage: python tiny_gpt2_cpu_100lines.py /path/to/large_text.txt")
         sys.exit(1)
 
-    big_path = sys.argv[1]
-    lines = read_first_lines(big_path, NUM_LINES)
-    if not lines:
-        print("No lines read; check file path or encoding.")
-        sys.exit(1)
-
     if len(sys.argv) > 2:
          workdir = f"{sys.argv[2]}/tiny_gpt2_artifacts"
     else:
          workdir = "./tiny_gpt2_artifacts"
 
     print(f"Using {workdir} for output ....")
+    
+    big_path = sys.argv[1]
+    lines = read_first_lines(big_path, NUM_LINES)
+    if not lines:
+        print("No lines read; check file path or encoding.")
+        sys.exit(1)
+    
     tokenizer = train_byte_level_bpe(lines, os.path.join(workdir, "tokenizer"))
     model = build_tiny_gpt2(tokenizer).to(device)
     model.train()
