@@ -118,10 +118,23 @@ def main():
     else:
          workdir = "./tiny_gpt2_artifacts"
 
-    print(f"Using {workdir} for output ....")
+    print(f"Using {workdir} for output ...")
+
+    if len(sys.argv) > 3:
+         max_steps = int(sys.argv[3])
+    else:
+         max_steps = MAX_STEPS
+
+    print(f"Using max_steps={max_steps} ...")
+
+    if len(sys.argv) > 4:
+         num_lines = int(sys.argv[4])
+    else:
+         num_lines = NUM_LINES
+    print(f"Using num_lines={num_lines} ...")
     
     big_path = sys.argv[1]
-    lines = read_first_lines(big_path, NUM_LINES)
+    lines = read_first_lines(big_path, num_lines)
     if not lines:
         print("No lines read; check file path or encoding.")
         sys.exit(1)
@@ -138,13 +151,13 @@ def main():
 
     optim = AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
 
-    print(f"Vocab size: {tokenizer.vocab_size} | Samples: {len(ds)} | Steps: {MAX_STEPS}")
+    print(f"Vocab size: {tokenizer.vocab_size} | Samples: {len(ds)} | Steps: {max_steps}")
     print("Starting training on CPU...")
 
     step = 0
     start_t = time.time()
     running_loss = 0.0
-    while step < MAX_STEPS:
+    while step < max_steps:
         for batch in dl:
             step += 1
             inputs = {k: v.to(device) for k, v in batch.items()}
@@ -162,7 +175,7 @@ def main():
                 print(f"step {step:4d} | loss {avg:.4f} | {elapsed:.1f}s elapsed")
                 running_loss = 0.0
 
-            if step >= MAX_STEPS:
+            if step >= max_steps:
                 break
 
     elapsed = time.time() - start_t
