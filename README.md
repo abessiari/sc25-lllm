@@ -1,5 +1,5 @@
 Build:
-docker build  -f Dockerfile -t aessiari/iri-llm:m4-1 .  
+docker build  -f Dockerfile -t aessiari/iri-llm:<version> .  
 
 Usage: 
 python3 tiny_gpt2_cpu_1k.py <input> <outdir> <steps> <lines>
