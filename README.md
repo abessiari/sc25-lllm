@@ -5,7 +5,7 @@ docker build  -f Dockerfile -t aessiari/iri-llm:<version> .
 
 Usage: 
 ```
-python3 tiny_gpt2_cpu_1k.py <input> <outdir> <steps> <lines>
+python3 tiny_gpt2_cpu_1k.py <input_file> <outdir> <steps> <lines>
 ```
 
 Example:
